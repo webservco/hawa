@@ -38,7 +38,7 @@ install {
     repositories.mavenInstaller {
         pom.project {
             packaging 'aar'
-            libGroupId = libGroupId
+            groupId libGroupId
             artifactId libArtifactId
             name libName
             description libDescription
@@ -94,8 +94,8 @@ bintray {
     key = properties.getProperty("bintray.apikey")
     configurations = ['archives']
     pkg {
-        repo = libGroupId
-        name = libArtifactId
+        repo = properties.getProperty("bintray.repo")
+        name = libGroupId + "." +  libArtifactId
         desc = libDescription
         websiteUrl = libUrl
         vcsUrl = libGit
