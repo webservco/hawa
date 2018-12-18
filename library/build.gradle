@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -10,9 +11,7 @@ android {
         versionCode = projectVersionCode
         versionName = projectVersionName
         project.version = android.defaultConfig.versionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -26,11 +25,65 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+group = libGroupId
+version = projectVersionName
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            libGroupId = libGroupId
+            artifactId libArtifactId
+            name libName
+            description libDescription
+            url libUrl
+            licenses {
+                license {
+                    name libLicenseName
+                    url libLicenseUrl
+                }
+            }
+            developers {
+                developer {
+                    id developerId
+                    name developerName
+                    email developerEmail
+                }
+            }
+            scm {
+                connection libGit
+                developerConnection libGit
+                url libUrl
+            }
+
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
 Properties properties = new Properties();
@@ -39,14 +92,22 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
     pkg {
         repo = libGroupId
         name = libArtifactId
-        userOrg = properties.getProperty("bintray.organisation")
-        licenses = ['MIT']
+        desc = libDescription
+        websiteUrl = libUrl
         vcsUrl = libGit
+        licenses = libLicenses
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        userOrg = properties.getProperty("bintray.organisation")
         version {
             name = projectVersionName
+            desc = libDescription
             vcsTag = projectVersionCode
             gpg {
                 sign = true
@@ -54,5 +115,4 @@ bintray {
             }
         }
     }
-    configurations = ['archives']
 }
