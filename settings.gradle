@@ -1,1 +1,1 @@
-include ':app', ':hawa'
+include ':app'
