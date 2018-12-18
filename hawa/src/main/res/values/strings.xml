@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">HAWA</string>
+    <string name="app_name">HAWA Library</string>
+    <string name="choose_intent_title">Choose image or video</string>
 </resources>
