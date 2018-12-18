@@ -14,6 +14,8 @@ public class WsActivity extends AppCompatActivity {
 
     protected ProgressBar mProgressBar;
 
+    protected WsSettings mSettings;
+
     private WsWebBrowser mWebBrowser;
 
     private WebView mWebView;
@@ -52,14 +54,22 @@ public class WsActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
 
         webBrowserInit(webView);
-        webBrowserLoadUrl(WsSettings.URL);
+        webBrowserLoadUrl(mSettings.getAppUrl());
+    }
+
+    protected WsSettings getSettings() {
+        return mSettings;
+    }
+
+    protected void setSettings(WsSettings settings) {
+        mSettings = settings;
     }
 
     protected void webBrowserInit(WebView webView) {
         WsUtilsAndroid.logDebug(this, "WsActivity:webBrowserInit");
         if (mWebBrowser == null) {
             mWebView = webView; // will be used also in other places
-            mWebBrowser = new WsWebBrowser(this, mWebView);
+            mWebBrowser = new WsWebBrowser(this, mSettings, mWebView);
         }
     }
 

@@ -1,12 +1,14 @@
 package co.webserv.android.hawa.library;
 
-public class WsSettings {
+public abstract class WsSettings {
 
-    public static boolean LOG_DEBUG = true;
-    public static boolean IGNORE_SSL_ERRORS = true;
-    public static String URL;
+    public abstract String getAppUrl();
 
-    static {
-        URL = "https://test.swup.italiamultimedia.com/";
+    public boolean getIgnoreSslErrors() {
+        return false;
+    }
+
+    public boolean getLogDebug() {
+        return true;
     }
 }

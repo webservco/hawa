@@ -12,8 +12,8 @@ public class WsUtilsAndroid {
 
     protected static final int REQUEST_CODE_FILE_UPLOAD = 1;
 
-    public static void logDebug(Context context, String msg) {
-        if (WsSettings.LOG_DEBUG) {
+    public static void logDebug(WsActivity activity, String msg) {
+        if (activity.getSettings().getLogDebug()) {
             Log.d(WsUtilsAndroid.LOG_TAG, msg);
         }
     }

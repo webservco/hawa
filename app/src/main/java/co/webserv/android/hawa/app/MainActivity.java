@@ -9,6 +9,7 @@ public class MainActivity extends WsActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.setSettings(new Settings());
         super.onCreate(savedInstanceState);
     }
 }

@@ -7,12 +7,15 @@ public class WsWebBrowser {
 
     private WsActivity mActivity;
 
+    private WsSettings mSettings;
+
     private WebView mWebView;
 
     private WebSettings mWebSettings;
 
-    public WsWebBrowser(WsActivity activity, WebView webView) {
+    public WsWebBrowser(WsActivity activity, WsSettings settings, WebView webView) {
         mActivity = activity;
+        mSettings = settings;
         mWebView = webView;
     }
 
@@ -21,7 +24,7 @@ public class WsWebBrowser {
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
 
-        mWebView.setWebViewClient(new WsWebViewClient(mActivity));
+        mWebView.setWebViewClient(new WsWebViewClient(mActivity, mSettings));
 
         mWebView.setWebChromeClient(new WsWebChromeClient(mActivity));
 

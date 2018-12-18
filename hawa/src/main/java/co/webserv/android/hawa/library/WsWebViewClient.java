@@ -9,9 +9,11 @@ import android.webkit.WebViewClient;
 public class WsWebViewClient extends WebViewClient {
 
     private WsActivity mActivity;
+    private WsSettings mSettings;
 
-    public WsWebViewClient(WsActivity activity) {
+    public WsWebViewClient(WsActivity activity, WsSettings settings) {
         mActivity = activity;
+        mSettings = settings;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class WsWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-        if (WsSettings.IGNORE_SSL_ERRORS) {
+        if (mSettings.getIgnoreSslErrors()) {
             handler.proceed();
         } else {
             super.onReceivedSslError(view, handler, error);
