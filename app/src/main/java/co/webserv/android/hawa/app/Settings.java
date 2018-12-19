@@ -6,7 +6,7 @@ public class Settings extends WsSettings {
 
     @Override
     public String getAppUrl() {
-        return "https://www.webserv.co/";
+        return "https://github.com/webservco/hawa";
     }
 
     @Override
