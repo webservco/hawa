@@ -2,5 +2,6 @@
 * text eol=lf
 # Turn off normalization for PNGs
 *.gif binary
+*.jar binary
 *.jpg binary
 *.png binary
